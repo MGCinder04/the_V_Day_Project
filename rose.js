@@ -12,14 +12,17 @@ const gardener = document.getElementById('gardener');
 const ground = document.getElementById('ground-area');
 let isRunning = false;
 
-// --- PARALLAX EFFECT ---
+// --- PARALLAX EFFECT (SLOWER & SMOOTHER) ---
 document.addEventListener('mousemove', (e) => {
+    // Calculate mouse position as a percentage (-1 to 1)
     const x = (window.innerWidth - e.pageX * 2) / 100;
-    const y = (window.innerHeight - e.pageY * 2) / 100;
 
-    // Shift mountains slightly based on mouse position
-    document.querySelector('.mountains-back').style.transform = `translateX(${x * 2}px)`;
-    document.querySelector('.mountains-front').style.transform = `translateX(${x * 5}px)`;
+    // Multipliers are much smaller now for subtle movement
+    // Back mountains move very little (0.5px per unit)
+    document.querySelector('.mountains-back').style.transform = `translateX(${x * 0.5}px)`;
+
+    // Front mountains move slightly more (1.2px per unit)
+    document.querySelector('.mountains-front').style.transform = `translateX(${x * 1.2}px)`;
 });
 
 
