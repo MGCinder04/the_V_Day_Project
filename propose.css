@@ -1,0 +1,105 @@
+/* propose.css */
+
+.propose-bg {
+    background: linear-gradient(135deg, #ffe5e5 0%, #fff0f3 100%);
+    overflow: hidden;
+    /* Stop scrollbars when button moves to edge */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.proposal-container {
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.15);
+    max-width: 500px;
+    width: 90%;
+    z-index: 10;
+    transition: transform 0.5s;
+}
+
+.cute-gif {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-color, #ff4d6d);
+}
+
+.buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    /* Needed for button movement logic */
+    min-height: 60px;
+    /* Keep space so layout doesn't jump */
+}
+
+/* YES BUTTON */
+.yes-btn {
+    background-color: #2ecc71;
+    /* Green for GO */
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    transition: transform 0.2s;
+}
+
+/* NO BUTTON (The Tricky One) */
+.no-btn {
+    background-color: #e74c3c;
+    /* Red for STOP */
+    position: absolute;
+    /* Allows us to move it anywhere */
+    transition: all 0.1s ease;
+    /* Fast movement */
+}
+
+/* Success Message (Hidden initially) */
+.hidden {
+    display: none;
+}
+
+#success-message {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+#confetti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 15;
+}
