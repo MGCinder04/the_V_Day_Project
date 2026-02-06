@@ -50,7 +50,8 @@ h1 {
     box-shadow: 0 5px 15px rgba(255, 77, 109, 0.15);
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
-    overflow: hidden;
+    z-index: 1;
+    overflow: visible;
 }
 
 /* Icon (Emoji) */
@@ -108,4 +109,68 @@ h1 {
 .day-card.valentine-special {
     background: linear-gradient(135deg, #fff0f3 0%, #fff 100%);
     border: 2px solid var(--primary-color);
+}
+
+/* --- UPDATED CARD HOVER & HEARTS --- */
+
+/* 1. Make the Card Dark & Glowing on Hover */
+.day-card:not(.locked):hover {
+    transform: translateY(-5px) scale(1.05);
+    background: #2b0c16; /* Goes dark */
+    color: var(--secondary-color); /* Text turns pink */
+    box-shadow: 0 0 25px var(--primary-color); /* The Soft Pink Glowing Outline */
+    border: 1px solid var(--primary-color);
+}
+
+.day-card:not(.locked):hover .timer {
+    background: #4a1a25; /* Darker background for timer too */
+    color: #fff;
+}
+
+/* 2. Bigger Hearts & Positioning */
+/* I increased widths by roughly 2x */
+
+.heart-icon {
+  position: absolute;
+  fill: var(--primary-color);
+  z-index: -1;
+  transition: all 0.8s cubic-bezier(0.1, 0.4, 0, 1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Bigger Start Sizes */
+.heart-1 { top: 20%; left: 20%; width: 50px; } /* Big one */
+.heart-2 { top: 45%; left: 45%; width: 30px; }
+.heart-3 { top: 40%; left: 40%; width: 20px; }
+.heart-4 { top: 20%; left: 40%; width: 25px; }
+.heart-5 { top: 25%; left: 45%; width: 35px; }
+.heart-6 { top: 5%;  left: 50%; width: 20px; }
+
+/* Fly Out Positions (unchanged, just ensuring they work with new sizes) */
+.day-card:hover .heart-icon { opacity: 1; z-index: 10; }
+
+.day-card:hover .heart-1 {
+  top: -40%; left: -30%;
+  filter: drop-shadow(0 0 10px var(--primary-color));
+}
+.day-card:hover .heart-2 {
+  top: -20%; left: 100%;
+  filter: drop-shadow(0 0 10px var(--primary-color));
+}
+.day-card:hover .heart-3 {
+  top: 100%; left: 100%;
+  filter: drop-shadow(0 0 10px var(--primary-color));
+}
+.day-card:hover .heart-4 {
+  top: 100%; left: 0%;
+  filter: drop-shadow(0 0 10px var(--primary-color));
+}
+.day-card:hover .heart-5 {
+  top: -30%; left: 50%;
+  filter: drop-shadow(0 0 10px var(--primary-color));
+}
+.day-card:hover .heart-6 {
+  top: 50%; left: 110%;
+  filter: drop-shadow(0 0 10px var(--primary-color));
 }
