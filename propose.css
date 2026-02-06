@@ -81,29 +81,25 @@ h1 {
     /* Green Glow */
 }
 
-/* --- NO BUTTON (Red Theme + Gliding) --- */
+/* --- NO BUTTON (The Evasive One) --- */
 .no-btn {
     color: #e74c3c;
+    position: fixed;
+    /* START Fixed so there's no layout jump */
 
-    /* We add 'top' and 'left' to the transition list here. */
-    /* This ensures that when JS moves the button, it GLIDES instead of teleporting. */
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-        box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-        background-color 0.3s ease,
-        color 0.3s ease,
-        top 0.4s ease-out,
-        /* The Glide Effect */
-        left 0.4s ease-out;
-    /* The Glide Effect */
+    /* We set initial positions so it doesn't float to top-left corner */
+    /* These will be overwritten by JS immediately to center it, but this prevents the 'snap' */
+    transition: top 0.8s ease-out,
+        /* Slower movement (was 0.4s) */
+        left 0.8s ease-out,
+        transform 0.3s ease;
+
+    z-index: 100;
+    /* Ensure it stays on top */
 }
 
-.no-btn:hover {
-    background-color: #e74c3c;
-    color: white;
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(231, 76, 60, 0.4);
-    /* Red Glow */
-}
+/* Remove the :hover red background because user can't touch it anymore! */
+/* We just keep the text red style */
 
 /* Active State (Click Press Effect) */
 .btn-proposal:active {
@@ -149,4 +145,10 @@ h1 {
     height: 100%;
     pointer-events: none;
     z-index: 15;
+}
+
+/* --- TELEPORT UTILITY --- */
+/* This class removes the animation so we can warp the button instantly */
+.teleport {
+    transition: none !important;
 }
