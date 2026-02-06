@@ -1,11 +1,68 @@
 // --- CONFIGURATION ---
 const messages = [
+    // --- Original ---
     "For you! 🌹",
     "You're amazing! ✨",
     "Be mine? 💖",
     "Sending Love! 💌",
     "Cutie! 😘",
-    "Forever Us! ♾️"
+    "Forever Us! ♾️",
+
+    // --- Funny (20) ---
+    "I love you more than I love free samples. And that’s a lot! 🍕",
+    "You’re the only person I’d share my fries with. Don’t push it though! 🍟",
+    "I like your face. Can I keep it? 😏",
+    "You’re the 'fine print' in my life—too good to be true! 📄✨",
+    "I’d pause my favorite game for you. For like, 5 minutes max! 🎮",
+    "You’re the reason I look down at my phone and smile like an idiot! 🤳🤡",
+    "Roses are red, violets are blue, I’m bad at rhyme, but I really like you! 📝",
+    "I love you almost as much as I love sleeping in on Saturdays! 😴",
+    "Are you a Wi-Fi signal? Because I’m feeling a very strong connection! 📶",
+    "You’re the person I want to annoy for the rest of my life! 😈",
+    "I love you even when you’re hangry! 🍔😤",
+    "Sorry I’m late, I was busy thinking about how cute you are! 🏃💨",
+    "You’re lucky I’m into you, because you’re a handful! 👐",
+    "Let’s be weird together forever! 👽",
+    "You’re the 'She' to my 'nanigans!' 👯‍♀️",
+    "I’d swipe right on you even if you had a picture with a fish! 🎣",
+    "You’re the cheese to my macaroni, and I’m really hungry right now! 🧀",
+    "If we were on a sinking ship, I’d share my door with you. Titanic style! 🚢",
+    "My favorite hobby is making you laugh so hard you snort! 🐽",
+    "You’re the only one I want to send ugly selfies to! 🤳👹",
+
+    // --- Loving (20) ---
+    "Every day with you feels like a beautiful dream come true! ☁️",
+    "You’re my favorite person in every version of reality! 🌌",
+    "Thank you for being the best part of my day, every single day! 🌅",
+    "You make my heart feel like it’s finally home! 🏠❤️",
+    "I didn't know life could be this sweet until I met you! 🍭",
+    "You are the poem I never knew how to write! ✍️",
+    "Falling for you was the easiest thing I've ever done! 🍂",
+    "You’re not just my love; you’re my peace! 🕊️",
+    "I’m so proud of the person you are and the life we're building! 🏗️💗",
+    "My heart is—and always will be—yours! 🔒",
+    "You make even the most ordinary moments feel extraordinary! ✨",
+    "Thank you for loving me exactly as I am! 🫂",
+    "The best thing about me is you! 💎",
+    "You’re my sun, my moon, and all my stars! 🌙",
+    "I love you more today than yesterday, but not as much as tomorrow! 📈",
+    "Life is better with you by my side! 👣",
+    "You are my greatest adventure! 🗺️",
+    "I still get butterflies every time I see you walk into a room! 🦋",
+    "You’re the piece I didn’t know was missing! 🧩",
+    "I'm so lucky to do life with you! 🥂",
+
+    // --- Cheesy (10) ---
+    "If you were a flower, you’d be a 'damnnn-delion!' 🌼",
+    "I’m 'thorny' without you! 🌹",
+    "Our love is in full bloom! 🌸",
+    "Are you a florist? Because ever since I met you, my life has been rosy! 🌷",
+    "I’m not a photographer, but I can definitely picture us together forever! 📸",
+    "Do you have a map? I just got lost in your eyes! 🗺️👀",
+    "If being beautiful was a crime, you’d be serving a life sentence! ⚖️",
+    "You’re 'berry' special to me! 🍓",
+    "I rose to the occasion just to tell you how much I love you! 💐",
+    "You’re the 'thistle' to my heart—I’m stuck on you! 🌵"
 ];
 
 const gardener = document.getElementById('gardener');
