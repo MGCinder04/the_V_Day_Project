@@ -294,45 +294,87 @@ body {
     overflow: hidden;
 }
 
-/* Clouds */
+/* --- UPDATED CLOUDS --- */
 .clouds {
     height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    /* Ensure they don't scroll the page */
 }
 
 .cloud {
-    font-size: 5rem;
+    font-size: 8rem;
+    /* Base size: Much Bigger */
     position: absolute;
-    opacity: 0.9;
-    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
+    text-shadow: 0 10px 30px rgba(255, 255, 255, 0.8);
+    /* Fluffy glow */
+    user-select: none;
 }
 
+/* Individual Cloud Styling */
+/* c1: High, slow */
 .c1 {
-    top: 10%;
+    top: 5%;
     left: 10%;
-    animation: float 40s infinite linear;
+    animation: float 45s infinite linear;
 }
 
+/* c2: Lower, reverse direction */
 .c2 {
-    top: 20%;
+    top: 25%;
     left: 60%;
-    animation: float 55s infinite linear reverse;
+    animation: float 50s infinite linear reverse;
 }
 
+/* c3: Small, fast, background */
 .c3 {
     top: 15%;
     left: 40%;
-    font-size: 3rem;
+    font-size: 5rem;
     opacity: 0.6;
-    animation: float 30s infinite linear;
+    animation: float 35s infinite linear;
+}
+
+/* c4: THE GIANT ONE (Background texture) */
+.c4 {
+    top: -5%;
+    left: 80%;
+    font-size: 15rem;
+    /* Massive */
+    opacity: 0.4;
+    z-index: -1;
+    animation: float 80s infinite linear;
+}
+
+/* c5: Low horizon cloud */
+.c5 {
+    top: 35%;
+    left: 20%;
+    font-size: 6rem;
+    opacity: 0.7;
+    animation: float 60s infinite linear reverse;
+}
+
+/* c6: Top fast floater */
+.c6 {
+    top: 8%;
+    left: -10%;
+    animation: float 40s infinite linear;
+    animation-delay: 5s;
 }
 
 @keyframes float {
-    from {
-        transform: translateX(-100px);
+    0% {
+        transform: translateX(-50px);
     }
 
-    to {
-        transform: translateX(100px);
+    50% {
+        transform: translateX(50px);
+    }
+
+    100% {
+        transform: translateX(-50px);
     }
 }
 
