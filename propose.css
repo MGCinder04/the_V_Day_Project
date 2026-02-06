@@ -35,35 +35,82 @@ h1 {
     color: var(--primary-color, #ff4d6d);
 }
 
-.buttons {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    position: relative;
-    /* Needed for button movement logic */
-    min-height: 60px;
-    /* Keep space so layout doesn't jump */
+/* --- BUTTON STYLES (Clean & Fixed) --- */
+
+/* Base Pill Button Style */
+.btn-proposal {
+    /* Shape & Size */
+    padding: 15px 40px;
+    border-radius: 50px;
+    /* Perfect Pill shape */
+    border: none;
+    /* No border */
+    outline: none;
+    min-width: 150px;
+
+    /* Typography */
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    background-color: white;
+    /* Default background */
+
+    /* 3D Depth Shadow */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+    /* Smooth Hover Animation (Visuals) */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        background-color 0.3s ease,
+        color 0.3s ease;
 }
 
-/* YES BUTTON */
+/* --- YES BUTTON (Green Theme) --- */
 .yes-btn {
-    background-color: #2ecc71;
-    /* Green for GO */
-    font-size: 1.2rem;
-    padding: 15px 30px;
-    transition: transform 0.2s;
+    color: #2ecc71;
 }
 
-/* NO BUTTON (The Tricky One) */
-.no-btn {
-    background-color: #e74c3c;
-    /* Red for STOP */
-    position: absolute;
-    /* Allows us to move it anywhere */
-    transition: all 0.1s ease;
-    /* Fast movement */
+.yes-btn:hover {
+    background-color: #2ecc71;
+    color: white;
+    transform: translateY(-5px);
+    /* Lifts up */
+    box-shadow: 0 15px 25px rgba(46, 229, 157, 0.4);
+    /* Green Glow */
 }
+
+/* --- NO BUTTON (Red Theme + Gliding) --- */
+.no-btn {
+    color: #e74c3c;
+
+    /* We add 'top' and 'left' to the transition list here. */
+    /* This ensures that when JS moves the button, it GLIDES instead of teleporting. */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        background-color 0.3s ease,
+        color 0.3s ease,
+        top 0.4s ease-out,
+        /* The Glide Effect */
+        left 0.4s ease-out;
+    /* The Glide Effect */
+}
+
+.no-btn:hover {
+    background-color: #e74c3c;
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(231, 76, 60, 0.4);
+    /* Red Glow */
+}
+
+/* Active State (Click Press Effect) */
+.btn-proposal:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
 
 /* Success Message (Hidden initially) */
 .hidden {
