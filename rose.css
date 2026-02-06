@@ -1,0 +1,291 @@
+/* --- ROSE DAY: FULL SCREEN IMMERSIVE --- */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Prevents scrollbars */
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #87CEEB 0%, #B3E5FC 50%, #E1F5FE 100%);
+}
+
+/* Minimal Back Arrow */
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 2rem;
+    text-decoration: none;
+    color: #fff;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.back-arrow:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* --- HEADER STYLING --- */
+.main-title {
+    position: absolute;
+    top: 5px;
+    /* Sits near top */
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+    font-size: 3.5rem;
+    /* Nice and big */
+    text-shadow: 0 4px 10px rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+}
+
+
+/* Hint Text */
+.hint-text {
+    top: 90px;
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* World Container */
+.world {
+    position: absolute;
+    /* Changed from relative to absolute to fill screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    /* Only ground should be clickable */
+}
+
+/* Parallax Elements */
+/* --- UPDATED MOUNTAINS (WIDER & PARALLAX READY) --- */
+
+.mountains-back {
+    height: 80vh;
+    /* WIDER than screen to prevent gaps during movement */
+    width: 120vw;
+    left: -10vw;
+    /* Center the extra width */
+
+    position: absolute;
+    background: #90A4AE;
+    clip-path: polygon(0% 100%, 0% 30%, 15% 65%, 30% 20%, 50% 60%, 70% 15%, 85% 55%, 100% 20%, 100% 100%);
+    opacity: 0.8;
+    z-index: 2;
+}
+
+.mountains-front {
+    height: 55vh;
+    /* WIDER than screen */
+    width: 120vw;
+    left: -10vw;
+    /* Center the extra width */
+
+    position: absolute;
+    bottom: 10vh;
+    background: #607D8B;
+    clip-path: polygon(0% 100%, 0% 50%, 15% 85%, 30% 40%, 50% 75%, 70% 30%, 85% 65%, 100% 40%, 100% 100%);
+    z-index: 3;
+}
+
+/* Ensure Ground stays on top */
+.ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    /* Anchors it to the very left edge */
+    width: 100vw;
+    /* Forces it to fill the entire width */
+    height: 25vh;
+
+    background: linear-gradient(to bottom, #7CB342 0%, #558B2F 100%);
+    pointer-events: auto;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewport="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>') 12 12, crosshair;
+
+    z-index: 10;
+}
+
+/* --- UPDATED CLOUDS --- */
+.clouds {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    /* Ensure they don't scroll the page */
+}
+
+.cloud {
+    font-size: 8rem;
+    /* Base size: Much Bigger */
+    position: absolute;
+    opacity: 0.8;
+    text-shadow: 0 10px 30px rgba(255, 255, 255, 0.8);
+    /* Fluffy glow */
+    user-select: none;
+}
+
+/* Individual Cloud Styling */
+/* c1: High, slow */
+.c1 {
+    top: 5%;
+    left: 10%;
+    animation: float 45s infinite linear;
+}
+
+/* c2: Lower, reverse direction */
+.c2 {
+    top: 25%;
+    left: 60%;
+    animation: float 50s infinite linear reverse;
+}
+
+/* c3: Small, fast, background */
+.c3 {
+    top: 15%;
+    left: 40%;
+    font-size: 5rem;
+    opacity: 0.6;
+    animation: float 35s infinite linear;
+}
+
+/* c4: THE GIANT ONE (Background texture) */
+.c4 {
+    top: -5%;
+    left: 80%;
+    font-size: 15rem;
+    /* Massive */
+    opacity: 0.4;
+    z-index: -1;
+    animation: float 80s infinite linear;
+}
+
+/* c5: Low horizon cloud */
+.c5 {
+    top: 35%;
+    left: 20%;
+    font-size: 6rem;
+    opacity: 0.7;
+    animation: float 60s infinite linear reverse;
+}
+
+/* c6: Top fast floater */
+.c6 {
+    top: 8%;
+    left: -10%;
+    animation: float 40s infinite linear;
+    animation-delay: 5s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateX(-50px);
+    }
+
+    50% {
+        transform: translateX(50px);
+    }
+
+    100% {
+        transform: translateX(-50px);
+    }
+}
+
+/* --- UPDATED GARDENER (ROSA) --- */
+#gardener {
+    position: absolute;
+    bottom: 30px;
+    /* Adjust based on your image height */
+    left: -150px;
+    /* Start off-screen */
+
+    /* SLOWER SPEED: 2.5s (was 1s) */
+    transition: left 2.5s ease-in-out;
+
+    z-index: 50;
+    will-change: left, transform;
+}
+
+#gardener img {
+    height: 120px;
+    /* Adjust this size to fit your scene */
+    width: auto;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+}
+
+/* --- BIGGER ROSES --- */
+.rose {
+    position: absolute;
+    bottom: 40px;
+
+    /* BIGGER: Was 2.5rem, now 5rem */
+    font-size: 5rem;
+
+    transform-origin: bottom center;
+    animation: bloomPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    z-index: 40;
+    pointer-events: none;
+    /* Let clicks pass through */
+}
+
+@keyframes bloomPop {
+    0% {
+        transform: scale(0) translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Message Bubble */
+.msg-bubble {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 1rem;
+    color: #333;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeUp 0.5s ease-out forwards;
+    pointer-events: none;
+    font-weight: bold;
+}
+
+.msg-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    border-width: 8px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+    transform: translateX(-50%);
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}

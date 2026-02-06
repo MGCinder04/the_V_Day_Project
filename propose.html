@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propose Day 💍</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="propose.css">
+</head>
+
+<body class="propose-bg">
+
+    <a href="index.html" class="back-arrow">←</a>
+
+    <div class="proposal-container">
+
+        <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Cute Bear" class="cute-gif">
+
+        <h1 class="shine-text">Will you be my Valentine? 💍</h1>
+        <p>There is no escape... choose wisely! 😈</p>
+
+        <div class="buttons">
+            <button class="btn-proposal yes-btn" id="yesBtn" onclick="acceptProposal()">YES! ❤️</button>
+            <button class="btn-proposal no-btn" id="noBtn">NO 💔</button>
+        </div>
+    </div>
+
+    <div id="success-message" class="hidden">
+        <h1>Bola tha na, nahi bach ke bhag payegi mujhse 😌 🎉</h1>
+        <p>You are officially mine now. No refunds.</p>
+
+    </div>
+
+    <canvas id="confetti"></canvas>
+
+    <script src="propose.js"></script>
+</body>
+
+</html>
