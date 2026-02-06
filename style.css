@@ -174,3 +174,43 @@ h1 {
   top: 50%; left: 110%;
   filter: drop-shadow(0 0 10px var(--primary-color));
 }
+
+/* --- SHIMMER TEXT EFFECT (FINAL FIXED) --- */
+.shine-text {
+    /* The gradient is now mostly red, with a thin white strip in the middle */
+    background: linear-gradient(to right,
+            var(--primary-color) 0%,
+            var(--primary-color) 40%,
+            #ffe6ea 50%,
+            var(--primary-color) 60%,
+            var(--primary-color) 100%);
+
+    /* Make background huge so we can move the strip across */
+    background-size: 180% auto;
+
+    /* Clip to text */
+    color: var(--primary-color);
+    /* Fallback */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Layout */
+    display: inline-block;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    /* Keeps the two lines close together */
+
+    /* Animation settings */
+    animation: shine 3s linear 1 forwards;
+}
+
+@keyframes shine {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
