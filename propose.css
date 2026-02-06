@@ -81,25 +81,22 @@ h1 {
     /* Green Glow */
 }
 
-/* --- NO BUTTON (The Evasive One) --- */
+/* --- NO BUTTON (Updated) --- */
 .no-btn {
     color: #e74c3c;
-    position: fixed;
-    /* START Fixed so there's no layout jump */
 
-    /* We set initial positions so it doesn't float to top-left corner */
-    /* These will be overwritten by JS immediately to center it, but this prevents the 'snap' */
+    /* CHANGE THIS: relative lets it sit nicely next to YES initially */
+    position: relative;
+
     transition: top 0.8s ease-out,
-        /* Slower movement (was 0.4s) */
         left 0.8s ease-out,
-        transform 0.3s ease;
+        transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        background-color 0.3s ease,
+        color 0.3s ease;
 
     z-index: 100;
-    /* Ensure it stays on top */
 }
-
-/* Remove the :hover red background because user can't touch it anymore! */
-/* We just keep the text red style */
 
 /* Active State (Click Press Effect) */
 .btn-proposal:active {

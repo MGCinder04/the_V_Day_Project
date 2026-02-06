@@ -1,18 +1,11 @@
 // --- CONFIGURATION ---
-const OFFSET = 100; // The "Danger Zone" radius (pixels)
-const RUN_DIST = 100; // How far it runs per jump
+const OFFSET = 100;
+const RUN_DIST = 300;
 
 const noBtn = document.getElementById('noBtn');
-const yesBtn = document.getElementById('yesBtn');
+// We don't need yesBtn for positioning anymore!
 
-// 1. INITIAL SETUP: Place 'No' next to 'Yes'
-function centerNoButton() {
-    const yesRect = yesBtn.getBoundingClientRect();
-    noBtn.style.left = (yesRect.right + 20) + 'px';
-    noBtn.style.top = yesRect.top + 'px';
-}
-window.onload = centerNoButton;
-window.onresize = centerNoButton;
+// NOTE: centerNoButton function REMOVED. CSS handles the alignment now.
 
 // 2. THE INTELLIGENT RUNNER
 document.addEventListener('mousemove', (e) => {
@@ -20,52 +13,53 @@ document.addEventListener('mousemove', (e) => {
     const y = e.clientY;
     const buttonRect = noBtn.getBoundingClientRect();
 
-    // Get center of button
     const btnX = buttonRect.left + buttonRect.width / 2;
     const btnY = buttonRect.top + buttonRect.height / 2;
 
-    // Calculate distance
     const dist = Math.sqrt(Math.pow(x - btnX, 2) + Math.pow(y - btnY, 2));
 
     // If mouse is too close, trigger the escape
     if (dist < OFFSET) {
+
+        // --- KEY FIX: DETACHMENT LOGIC ---
+        // If the button is still sitting in the layout (relative),
+        // we lock its current coordinates and switch to fixed mode
+        // so it can fly freely without jumping.
+        if (noBtn.style.position !== 'fixed') {
+            const rect = noBtn.getBoundingClientRect();
+            noBtn.style.left = rect.left + 'px';
+            noBtn.style.top = rect.top + 'px';
+            noBtn.style.position = 'fixed';
+        }
+
         runAway(x, y, btnX, btnY);
     }
 });
 
 function runAway(mouseX, mouseY, btnX, btnY) {
-    // 1. Calculate the angle AWAY from the mouse
-    // (Button Center - Mouse Position) gives us the direction vector
     const deltaX = btnX - mouseX;
     const deltaY = btnY - mouseY;
     const angle = Math.atan2(deltaY, deltaX);
 
-    // 2. Calculate new position based on that angle
-    // We add randomness (-0.5 to +0.5 radians) so it's not a perfectly straight line every time
     const randomAngle = angle + (Math.random() - 0.5);
 
     let newX = btnX + Math.cos(randomAngle) * RUN_DIST;
     let newY = btnY + Math.sin(randomAngle) * RUN_DIST;
 
-    // 3. PAC-MAN WRAPPING LOGIC (The "Teleport")
-    // Get screen dimensions
+    // PAC-MAN WRAPPING LOGIC
     const width = window.innerWidth;
     const height = window.innerHeight;
     const btnW = noBtn.offsetWidth;
     const btnH = noBtn.offsetHeight;
 
-    // Check Horizontal Bounds
     if (newX < 0) {
-        // If it went too far Left -> Teleport to Right Edge
         newX = width - btnW - 20;
-        teleportTo(width, newY); // Visual Trick
+        teleportTo(width, newY);
     } else if (newX > width - btnW) {
-        // If it went too far Right -> Teleport to Left Edge
         newX = 20;
-        teleportTo(-btnW, newY); // Visual Trick
+        teleportTo(-btnW, newY);
     }
 
-    // Check Vertical Bounds
     if (newY < 0) {
         newY = height - btnH - 20;
         teleportTo(newX, height);
@@ -74,35 +68,24 @@ function runAway(mouseX, mouseY, btnX, btnY) {
         teleportTo(newX, -btnH);
     }
 
-    // 4. Apply the final smooth move
     noBtn.style.left = newX + 'px';
     noBtn.style.top = newY + 'px';
 }
 
-// Helper to handle the instant warp
 function teleportTo(x, y) {
-    // Disable transition
     noBtn.classList.add('teleport');
-
-    // Move instantly to the "other side"
     noBtn.style.left = x + 'px';
     noBtn.style.top = y + 'px';
-
-    // Force browser to realize we moved (Reflow)
     void noBtn.offsetWidth;
-
-    // Re-enable transition for the next move
     noBtn.classList.remove('teleport');
 }
 
-// 5. Success Interaction
 function acceptProposal() {
     document.querySelector('.proposal-container').style.display = 'none';
     document.getElementById('success-message').classList.remove('hidden');
     startConfetti();
 }
 
-// ... Confetti Code (Keep your existing startConfetti function here) ...
 function startConfetti() {
     const canvas = document.getElementById('confetti');
     const ctx = canvas.getContext('2d');
