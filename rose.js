@@ -28,38 +28,44 @@ document.addEventListener('mousemove', (e) => {
 
 // --- PLANTING LOGIC ---
 function plantRose(event) {
-    if (isRunning) return; // Busy running
+    if (isRunning) return;
     isRunning = true;
 
-    // 1. Get Click Position
     const clickX = event.clientX;
     const rect = ground.getBoundingClientRect();
-
-    // Calculate position relative to the container
     const relativeX = clickX - rect.left;
 
-    // 2. Face the right direction
+    // Target the image to flip it
+    const gardenerImg = gardener.querySelector('img');
     const currentLeft = gardener.offsetLeft;
+
+    // Variable to track facing direction (1 = Right, -1 = Left)
+    let facingDir = 1;
+
+    // 1. Face the correct direction
     if (clickX < currentLeft) {
-        gardener.style.transform = "scaleX(-1)"; // Face Left
+        gardenerImg.style.transform = "scaleX(-1)"; // Face Left
+        facingDir = -1;
     } else {
-        gardener.style.transform = "scaleX(1)"; // Face Right
+        gardenerImg.style.transform = "scaleX(1)"; // Face Right
+        facingDir = 1;
     }
 
-    // 3. Run to the click spot
-    // Subtract 30px to center the cat on the mouse cursor
-    gardener.style.left = `${relativeX - 30}px`;
+    // 2. Run to the spot (Centered on mouse)
+    // We subtract 60px to center her, but we save this position to use later
+    const targetPos = relativeX - 60;
+    gardener.style.left = `${targetPos}px`;
 
-    // 4. Wait for run to finish (1 second approx)
+    // 3. Wait 2.5 seconds for the run to finish
     setTimeout(() => {
 
-        // Plant the rose at that exact spot
+        // --- PLANT THE ROSE ---
         const rose = document.createElement('div');
         rose.classList.add('rose');
         rose.innerHTML = "🌹";
-        rose.style.left = `${relativeX}px`; // Plant exactly where clicked
+        // Plant exactly at the click X, not the character X
+        rose.style.left = `${relativeX}px`;
 
-        // Add Message
         const msg = document.createElement('div');
         msg.classList.add('msg-bubble');
         msg.innerText = messages[Math.floor(Math.random() * messages.length)];
@@ -67,10 +73,18 @@ function plantRose(event) {
 
         ground.appendChild(rose);
 
-        // 5. Cooldown before next run
+        // --- THE "STEP BACK" MOVE ---
+        // If facing Right (1), step Left (-120px)
+        // If facing Left (-1), step Right (+120px)
+        const stepBackDistance = 120;
+        const newPos = targetPos - (facingDir * stepBackDistance);
+
+        gardener.style.left = `${newPos}px`;
+
+        // 4. Cooldown (Wait for the step back to finish before unlocking)
         setTimeout(() => {
             isRunning = false;
-        }, 500);
+        }, 1000); // 1 extra second for the step back
 
-    }, 1000); // 1s running time
+    }, 2500);
 }

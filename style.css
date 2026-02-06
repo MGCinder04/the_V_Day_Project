@@ -244,17 +244,26 @@ body {
     transform: scale(1.1);
 }
 
-/* Hint Text */
-.hint-text {
+/* --- HEADER STYLING --- */
+.main-title {
     position: absolute;
-    top: 20px;
+    top: 5px;
+    /* Sits near top */
     width: 100%;
     text-align: center;
-    font-size: 1.5rem;
-    z-index: 90;
+    z-index: 100;
+    font-size: 3.5rem;
+    /* Nice and big */
+    text-shadow: 0 4px 10px rgba(255, 255, 255, 0.8);
     pointer-events: none;
-    /* Let clicks pass through to the world */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Hint Text */
+.hint-text {
+    top: 90px;
+    font-size: 1.2rem;
+    opacity: 0.8;
 }
 
 /* World Container */
@@ -408,29 +417,41 @@ body {
     }
 }
 
-/* The Gardener (Cat) */
+/* --- UPDATED GARDENER (ROSA) --- */
 #gardener {
-    font-size: 4rem;
     position: absolute;
-    bottom: 40px;
-    /* Sits on the grass */
-    left: -100px;
-    /* Starts off-screen */
-    transition: left 1s ease-in-out;
-    /* Smooth running */
+    bottom: 30px;
+    /* Adjust based on your image height */
+    left: -150px;
+    /* Start off-screen */
+
+    /* SLOWER SPEED: 2.5s (was 1s) */
+    transition: left 2.5s ease-in-out;
+
     z-index: 50;
     will-change: left, transform;
 }
 
-/* The Rose */
+#gardener img {
+    height: 120px;
+    /* Adjust this size to fit your scene */
+    width: auto;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+}
+
+/* --- BIGGER ROSES --- */
 .rose {
     position: absolute;
-    bottom: 50px;
-    /* Aligned with cat */
-    font-size: 2.5rem;
+    bottom: 40px;
+
+    /* BIGGER: Was 2.5rem, now 5rem */
+    font-size: 5rem;
+
     transform-origin: bottom center;
     animation: bloomPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     z-index: 40;
+    pointer-events: none;
+    /* Let clicks pass through */
 }
 
 @keyframes bloomPop {
@@ -485,3 +506,4 @@ body {
         transform: translate(-50%, 0);
     }
 }
+
