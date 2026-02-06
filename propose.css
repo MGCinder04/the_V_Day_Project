@@ -152,3 +152,34 @@ h1 {
 .teleport {
     transition: none !important;
 }
+
+/* --- FIXED BACK ARROW --- */
+.back-arrow {
+    position: absolute;
+    /* Force it out of the flex center */
+    top: 30px;
+    left: 30px;
+
+    /* Styling */
+    font-size: 3rem;
+    /* Much Bigger */
+    font-weight: 900;
+    /* Thicker/Bold */
+    color: #ff4d6d;
+    /* Pink to match theme */
+    text-decoration: none;
+
+    /* Transparency & Interaction */
+    opacity: 0.3;
+    /* Faded out (Ghost mode) */
+    z-index: 200;
+    /* Always on top */
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.back-arrow:hover {
+    opacity: 1;
+    /* Fully visible when you need it */
+    transform: scale(1.2);
+    /* Slight pop */
+}
