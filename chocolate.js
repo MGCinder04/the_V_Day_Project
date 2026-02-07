@@ -7,6 +7,24 @@ const chocoCountDisplay = document.getElementById('choco-count');
 const restartBtn = document.getElementById('restart-btn');
 const winModal = document.getElementById('win-modal');
 
+// Sounds
+const clickSound = document.getElementById('click-sound');
+const winSound = document.getElementById('win-sound');
+const loseSound = document.getElementById('lose-sound');
+
+// Close Modal Logic
+document.querySelector('.close-modal').addEventListener('click', closeModal);
+
+window.onclick = function (event) {
+    if (event.target == winModal) {
+        closeModal();
+    }
+}
+
+function closeModal() {
+    winModal.classList.add('hidden');
+}
+
 // Game Config
 const rows = 5;
 const cols = 5;
@@ -22,7 +40,10 @@ function initGame() {
     isGameOver = false;
     squares = [];
 
-    // Update Display
+    // Reset Sound
+    clickSound.volume = 0.5;
+    winSound.volume = 0.5;
+
     chocoCountDisplay.innerText = (rows * cols) - totalMines;
 
     // 1. Create Game Array
@@ -51,21 +72,39 @@ function initGame() {
         squares.push(square);
     }
 
-    // 3. Calculate Numbers
+    // 3. Calculate Numbers (FIXED LOGIC)
     for (let i = 0; i < squares.length; i++) {
         let total = 0;
         const isLeftEdge = (i % cols === 0);
         const isRightEdge = (i % cols === cols - 1);
 
         if (squares[i].getAttribute('data-type') === 'valid') {
+            // Check all 8 directions with CORRECT boundaries
+
+            // West
             if (i > 0 && !isLeftEdge && squares[i - 1].getAttribute('data-type') === 'mine') total++;
-            if (i > 9 && !isRightEdge && squares[i + 1 - cols].getAttribute('data-type') === 'mine') total++;
-            if (i > 9 && squares[i - cols].getAttribute('data-type') === 'mine') total++;
-            if (i > 9 && !isLeftEdge && squares[i - 1 - cols].getAttribute('data-type') === 'mine') total++;
-            if (i < 24 && !isRightEdge && squares[i + 1].getAttribute('data-type') === 'mine') total++;
-            if (i < 15 && !isLeftEdge && squares[i - 1 + cols].getAttribute('data-type') === 'mine') total++;
-            if (i < 15 && !isRightEdge && squares[i + 1 + cols].getAttribute('data-type') === 'mine') total++;
-            if (i < 15 && squares[i + cols].getAttribute('data-type') === 'mine') total++;
+
+            // East
+            if (i < (rows * cols) - 1 && !isRightEdge && squares[i + 1].getAttribute('data-type') === 'mine') total++;
+
+            // North
+            if (i >= cols && squares[i - cols].getAttribute('data-type') === 'mine') total++;
+
+            // South
+            if (i < (rows * cols) - cols && squares[i + cols].getAttribute('data-type') === 'mine') total++;
+
+            // North West
+            if (i >= cols && !isLeftEdge && squares[i - cols - 1].getAttribute('data-type') === 'mine') total++;
+
+            // North East
+            if (i >= cols && !isRightEdge && squares[i - cols + 1].getAttribute('data-type') === 'mine') total++;
+
+            // South West
+            if (i < (rows * cols) - cols && !isLeftEdge && squares[i + cols - 1].getAttribute('data-type') === 'mine') total++;
+
+            // South East
+            if (i < (rows * cols) - cols && !isRightEdge && squares[i + cols + 1].getAttribute('data-type') === 'mine') total++;
+
             squares[i].setAttribute('data-total', total);
         }
     }
@@ -77,6 +116,8 @@ function addFlag(square) {
         if (!square.classList.contains('flag')) {
             square.classList.add('flag');
             square.innerHTML = '🚩';
+            clickSound.currentTime = 0;
+            clickSound.play();
         } else {
             square.classList.remove('flag');
             square.innerHTML = '';
@@ -85,28 +126,29 @@ function addFlag(square) {
 }
 
 function click(square) {
-    let currentId = square.id;
     if (isGameOver) return;
     if (square.classList.contains('revealed') || square.classList.contains('flag')) return;
+
+    clickSound.currentTime = 0;
+    clickSound.play();
 
     if (square.getAttribute('data-type') === 'mine') {
         gameOver(square);
     } else {
         let total = square.getAttribute('data-total');
-
         if (total != 0) {
             square.classList.add('revealed');
             square.classList.add('checked');
-            square.innerHTML = total; // Show Number
+            square.innerHTML = total;
+            checkForWin();
             return;
         }
-
-        // RECURSION FOR EMPTY SPOTS
-        checkSquare(square, currentId);
+        checkSquare(square, parseInt(square.id));
     }
     square.classList.add('revealed');
 }
 
+// RECURSIVE FLOOD FILL (Fixed Logic)
 function checkSquare(square, currentId) {
     const isLeftEdge = (currentId % cols === 0);
     const isRightEdge = (currentId % cols === cols - 1);
@@ -117,38 +159,43 @@ function checkSquare(square, currentId) {
         square.classList.add('revealed');
         square.classList.add('checked');
 
-        // --- CHANGE: SHOW CHOCOLATE IF EMPTY ---
-        square.classList.add('chocolate'); // Add special style
-        square.innerHTML = '🍫';           // Add the emoji
+        // Show Chocolate
+        square.classList.add('chocolate');
+        square.innerHTML = '🍫';
 
         let neighbors = [];
-        if (currentId > 0 && !isLeftEdge) neighbors.push(parseInt(currentId) - 1);
-        if (currentId > 9 && !isRightEdge) neighbors.push(parseInt(currentId) + 1 - cols);
-        if (currentId > 9) neighbors.push(parseInt(currentId) - cols);
-        if (currentId > 9 && !isLeftEdge) neighbors.push(parseInt(currentId) - 1 - cols);
-        if (currentId < 24 && !isRightEdge) neighbors.push(parseInt(currentId) + 1);
-        if (currentId < 15 && !isLeftEdge) neighbors.push(parseInt(currentId) - 1 + cols);
-        if (currentId < 15 && !isRightEdge) neighbors.push(parseInt(currentId) + 1 + cols);
-        if (currentId < 15) neighbors.push(parseInt(currentId) + cols);
+
+        // West
+        if (currentId > 0 && !isLeftEdge) neighbors.push(currentId - 1);
+        // East
+        if (currentId < (rows * cols) - 1 && !isRightEdge) neighbors.push(currentId + 1);
+        // North
+        if (currentId >= cols) neighbors.push(currentId - cols);
+        // South
+        if (currentId < (rows * cols) - cols) neighbors.push(currentId + cols);
+        // North West
+        if (currentId >= cols && !isLeftEdge) neighbors.push(currentId - cols - 1);
+        // North East
+        if (currentId >= cols && !isRightEdge) neighbors.push(currentId - cols + 1);
+        // South West
+        if (currentId < (rows * cols) - cols && !isLeftEdge) neighbors.push(currentId + cols - 1);
+        // South East
+        if (currentId < (rows * cols) - cols && !isRightEdge) neighbors.push(currentId + cols + 1);
 
         neighbors.forEach(neighborId => {
             const newSquare = document.getElementById(neighborId);
             const newTotal = newSquare.getAttribute('data-total');
-
             if (!newSquare.classList.contains('checked')) {
-                // If neighbor is a Number (1,2,3), reveal it but stop recursion
                 if (newTotal != 0) {
                     newSquare.classList.add('revealed');
                     newSquare.classList.add('checked');
                     newSquare.innerHTML = newTotal;
                 } else {
-                    // If neighbor is also 0, keep recursing!
                     checkSquare(newSquare, neighborId);
                 }
             }
         });
 
-        // Check win after recursion finishes
         checkForWin();
 
     }, 10);
@@ -156,12 +203,13 @@ function checkSquare(square, currentId) {
 
 function gameOver(square) {
     isGameOver = true;
+    loseSound.currentTime = 0;
+    loseSound.play();
+
     squares.forEach(sq => {
         if (sq.getAttribute('data-type') === 'mine') {
             sq.innerHTML = '🥦';
             sq.classList.add('mine');
-            // Force remove 'cell' transparency issue by adding 'mine' class
-            // CSS handles visibility now
         }
     });
     restartBtn.style.display = 'inline-block';
@@ -174,15 +222,20 @@ function checkForWin() {
             matches++;
         }
     }
+
     chocoCountDisplay.innerText = ((rows * cols) - totalMines) - matches;
+
     if (matches === (rows * cols) - totalMines) {
-        isGameOver = true;
-        winModal.classList.remove('hidden');
-        startConfetti();
+        if (!isGameOver) {
+            isGameOver = true;
+            winSound.currentTime = 0;
+            winSound.play();
+            winModal.classList.remove('hidden');
+            startConfetti();
+        }
     }
 }
 
-// ... Keep your existing Confetti code below ...
 function startConfetti() {
     const canvas = document.getElementById('confetti');
     const ctx = canvas.getContext('2d');

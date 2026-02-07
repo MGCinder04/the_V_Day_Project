@@ -305,3 +305,30 @@ h1 {
         transform: scale(1);
     }
 }
+
+/* --- MODAL UPDATES --- */
+
+/* The Close 'X' Button */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: #e74c3c;
+    /* Turns red on hover */
+}
+
+/* Ensure modal content handles the absolute positioning */
+.modal-content {
+    position: relative;
+    /* Important for the X to stay inside */
+    /* Existing styles remain... */
+}
