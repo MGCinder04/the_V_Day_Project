@@ -1,7 +1,11 @@
 // script.js
 
 // This function runs every second to update the countdowns
+
+let devMode = false; // The Master Switch
+
 function updateTimers() {
+    if (devMode) return;
     const now = new Date();
     const cards = document.querySelectorAll('.day-card');
 
@@ -48,3 +52,41 @@ function updateTimers() {
 // Start the timer immediately
 setInterval(updateTimers, 1000);
 updateTimers(); // Run once on load to avoid 1-second delay
+
+
+// --- DEVELOPER CHEAT CODE ---
+// Press 'u' to unlock all days instantly
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'u' || e.key === 'U') {
+        devMode = true; // Stop the timer loop
+
+        // 1. Find all locked cards
+        const lockedCards = document.querySelectorAll('.locked');
+
+        if (lockedCards.length === 0) {
+            alert("Everything is already unlocked! ❤️");
+            return;
+        }
+
+        // 2. Unlock them one by one
+        lockedCards.forEach(card => {
+            // Remove the visual lock
+            card.classList.remove('locked');
+            card.classList.add('unlocked'); // Optional: Add unlocked styling if you have it
+
+            // --- THE FIX IS HERE ---
+            // Remove the "Patience" alert blocker so the link works!
+            card.onclick = null;
+            // -----------------------
+
+            // Update the text visually
+            const timerElement = card.querySelector('.timer');
+            const statusElement = card.querySelector('.status');
+
+            if (timerElement) timerElement.innerText = "Click to Open! (Dev)";
+            if (statusElement) statusElement.innerText = "🔓";
+        });
+
+        console.log("DEV MODE: All dates unlocked.");
+    }
+});

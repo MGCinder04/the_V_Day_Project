@@ -81,8 +81,20 @@ function teleportTo(x, y) {
 }
 
 function acceptProposal() {
+    // 1. Play the "Oh Yeah" Sound 🎵
+    const sound = document.getElementById('yes-sound');
+    if (sound) {
+        sound.volume = 0.6; // Sets volume to 60% (optional, but good practice)
+        sound.play();
+    }
+
+    // 2. Hide the Proposal Card
     document.querySelector('.proposal-container').style.display = 'none';
+
+    // 3. Show Success Message
     document.getElementById('success-message').classList.remove('hidden');
+
+    // 4. Start the Swaying Confetti
     startConfetti();
 }
 
@@ -95,25 +107,44 @@ function startConfetti() {
     const pieces = [];
     const colors = ['#ff4d6d', '#ff8fa3', '#fff0f3', '#ffd700', '#2ecc71'];
 
+    // 1. Setup Particles with "Sway" physics
     for (let i = 0; i < 300; i++) {
         pieces.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height - canvas.height,
             color: colors[Math.floor(Math.random() * colors.length)],
             size: Math.random() * 10 + 5,
-            speed: Math.random() * 5 + 2
+            speed: Math.random() * 5 + 2,
+
+            // The Sway Variables
+            sway: Math.random() * 20,
+            swaySpeed: Math.random() * 0.05 + 0.01
         });
     }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
         pieces.forEach(p => {
             ctx.fillStyle = p.color;
             ctx.fillRect(p.x, p.y, p.size, p.size);
+
+            // 2. Move Down
             p.y += p.speed;
-            if (p.y > canvas.height) p.y = -20;
+
+            // 3. Sway Side-to-Side (The smooth part!)
+            p.x += Math.sin(p.sway) * 1.5;
+            p.sway += p.swaySpeed;
+
+            // 4. Infinite Loop: Reset to top if it falls off screen
+            if (p.y > canvas.height) {
+                p.y = -20;
+                p.x = Math.random() * canvas.width;
+            }
         });
+
         requestAnimationFrame(animate);
     }
+
     animate();
 }

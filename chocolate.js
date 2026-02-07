@@ -23,6 +23,11 @@ window.onclick = function (event) {
 
 function closeModal() {
     winModal.classList.add('hidden');
+
+    // FORCE CLEAR CONFETTI
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 // Game Config
@@ -245,27 +250,95 @@ function startConfetti() {
     const pieces = [];
     const colors = ['#ffd700', '#8d6e63', '#4e342e', '#ffecb3', '#fff'];
 
+    // Create particles with "Sway" properties
     for (let i = 0; i < 300; i++) {
         pieces.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height - canvas.height,
             color: colors[Math.floor(Math.random() * colors.length)],
             size: Math.random() * 10 + 5,
-            speed: Math.random() * 5 + 2
+            speed: Math.random() * 5 + 2,
+            sway: Math.random() * 20, // Random starting sway position
+            swaySpeed: Math.random() * 0.05 + 0.01 // How fast it sways
         });
     }
 
+    // STATE VARIABLES
+    let opacity = 1.0;
+    let fadingOut = false;
+
+    // Trigger Fade Out after 5 Seconds (5000ms)
+    setTimeout(() => {
+        fadingOut = true;
+    }, 5000);
+
     function animate() {
+        // 1. Instant Kill Switch (If user closes modal manually)
+        if (winModal.classList.contains('hidden')) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
+        }
+
+        // 2. Clear Screen
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 3. Handle Fading
+        if (fadingOut) {
+            opacity -= 0.02; // Decrease opacity slowly
+
+            // Stop animation when invisible
+            if (opacity <= 0) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                return;
+            }
+        }
+
+        // Apply Opacity
+        ctx.globalAlpha = opacity;
+
+        // 4. Draw & Move
         pieces.forEach(p => {
             ctx.fillStyle = p.color;
             ctx.fillRect(p.x, p.y, p.size, p.size);
+
+            // FALL DOWN
             p.y += p.speed;
-            if (p.y > canvas.height) p.y = -20;
+
+            // SWAY SIDE-TO-SIDE (The fluid part!)
+            p.x += Math.sin(p.sway) * 1.5;
+            p.sway += p.swaySpeed;
+
+            // Loop from top if it falls off screen (only if not fading out)
+            if (p.y > canvas.height && !fadingOut) {
+                p.y = -20;
+                p.x = Math.random() * canvas.width;
+            }
         });
-        if (!winModal.classList.contains('hidden')) {
-            requestAnimationFrame(animate);
-        }
+
+        requestAnimationFrame(animate);
     }
+
     animate();
 }
+
+// // --- DEV CHEAT CODE (For Testing Only) ---
+// // Press 'w' to instantly win
+// document.addEventListener('keydown', (e) => {
+//     if (e.key === 'w' || e.key === 'W') {
+//         if (winModal.classList.contains('hidden')) { // Only works if game is running
+
+//             // 1. Stop the game
+//             isGameOver = true;
+
+//             // 2. Play Sound
+//             winSound.currentTime = 0;
+//             winSound.play();
+
+//             // 3. Show Modal
+//             winModal.classList.remove('hidden');
+
+//             // 4. Party Time
+//             startConfetti();
+//         }
+//     }
+// });
