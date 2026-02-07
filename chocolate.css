@@ -1,0 +1,334 @@
+/* --- CHOCOLATE THEME --- */
+.choco-bg {
+    background: linear-gradient(135deg, #4e342e 0%, #8d6e63 100%);
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    /* Perfect Center */
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    overflow-y: auto;
+    /* Allow scroll if needed on small phones */
+}
+
+/* --- FIXED BACK ARROW --- */
+.back-arrow {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ffd180;
+    opacity: 0.3;
+    z-index: 200;
+    text-decoration: none;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.back-arrow:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* --- MAIN GAME CONTAINER (Fixed Height) --- */
+.game-container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+
+    /* SIZE FIX */
+    width: 90%;
+    max-width: 800px;
+    min-height: 50vh;
+    /* Reduced from 70vh to 50vh */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+}
+
+h1 {
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.status-bar {
+    margin: 10px 0 20px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffd180;
+    letter-spacing: 1px;
+}
+
+/* --- THE GRID --- */
+.chocolate-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+
+    background: #3e2723;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+    border: 4px solid #5d4037;
+
+    /* Prevent collapse */
+    min-width: 250px;
+    min-height: 250px;
+}
+
+/* --- CHOCOLATE SQUARES --- */
+.cell {
+    width: 65px;
+    height: 65px;
+    background-color: #6d4c41;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+
+    border-top: 4px solid #8d6e63;
+    border-left: 4px solid #8d6e63;
+    border-right: 4px solid #4e342e;
+    border-bottom: 4px solid #4e342e;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    user-select: none;
+    transition: transform 0.1s;
+}
+
+.cell:active {
+    transform: scale(0.95);
+}
+
+.cell.revealed {
+    background-color: #d7ccc8;
+    border: 2px solid #a1887f;
+    cursor: default;
+    transform: none;
+}
+
+/* MINE (Broccoli) - Fixed Centering & Size */
+.cell.mine {
+    background-color: #ef9a9a;
+    border: 2px solid #e57373;
+    /* Overrides the 3D bevel borders */
+
+    /* Force size and centering to remain */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Make it big again */
+    font-size: 2.5rem;
+
+    animation: shake 0.4s;
+    cursor: default;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* --- NEW PLAY AGAIN BUTTON (Propose Style) --- */
+#restart-btn {
+    margin-top: 30px;
+
+    /* Pill Shape & Size */
+    padding: 15px 40px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+
+    /* Typography */
+    font-size: 1.2rem;
+    /* Slightly Bigger */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+
+    /* Colors (Chocolate Theme) */
+    background-color: #ffd180;
+    /* Gold */
+    color: #3e2723;
+    /* Dark Brown Text */
+
+    /* 3D Shadow */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+    /* Smooth Animation */
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+#restart-btn:hover {
+    background-color: #ffecb3;
+    /* Lighter Gold */
+    transform: translateY(-3px);
+    /* Lift Up */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#restart-btn:active {
+    transform: translateY(-1px);
+}
+
+/* --- MODAL --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+    color: #333;
+    width: 90%;
+    max-width: 500px;
+}
+
+.ticket {
+    background: linear-gradient(45deg, #ffd700, #ffecb3);
+    border: 4px dashed #b7950b;
+    padding: 30px;
+    margin: 20px 0;
+    transform: rotate(-2deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* --- MINESWEEPER LOGIC STYLES --- */
+
+/* The base square (Unopened Chocolate) */
+.cell {
+    /* Existing styling from before... */
+    color: transparent;
+    /* Hide contents initially */
+    text-shadow: none;
+}
+
+/* 1. REVEALED NUMBER (Clue) */
+.cell.checked {
+    background-color: #d7ccc8;
+    /* Creamy inside */
+    border: 1px solid #a1887f;
+    /* Flat border */
+    transform: none;
+    /* No 3D effect */
+    cursor: default;
+
+    /* Reveal the number */
+    color: #5d4037;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+/* 2. REVEALED CHOCOLATE (Safe Empty Spot) */
+.cell.chocolate {
+    background-color: #efebe9;
+    /* Lighter cream */
+    color: initial !important;
+    /* Show the Emoji color */
+    font-size: 2.5rem;
+    display: flex;
+    /* Ensure centering */
+    justify-content: center;
+    align-items: center;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 3. REVEALED MINE (Broccoli) */
+.cell.mine {
+    background-color: #ef9a9a;
+    /* Red background */
+    border: 2px solid #e57373;
+
+    /* IMPORTANT: Fix Visibility */
+    color: initial !important;
+    /* Force emoji to show */
+    opacity: 1;
+
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: shake 0.4s;
+    cursor: default;
+}
+
+/* Flagged Square */
+.cell.flag {
+    color: initial !important;
+    /* Show flag */
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* --- MODAL UPDATES --- */
+
+/* The Close 'X' Button */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: #e74c3c;
+    /* Turns red on hover */
+}
+
+/* Ensure modal content handles the absolute positioning */
+.modal-content {
+    position: relative;
+    /* Important for the X to stay inside */
+    /* Existing styles remain... */
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choco Sweeper 🍫</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chocolate.css">
+</head>
+
+<body class="choco-bg">
+
+    <a href="index.html" class="back-arrow">←</a>
+
+    <audio id="click-sound" src="pop.wav"></audio>
+    <audio id="win-sound" src="win.mp3"></audio>
+    <audio id="lose-sound" src="lose.mp3"></audio>
+
+    <div class="game-container">
+        <h1 class="shine-text" style="font-size: 2.5rem;">Choco Sweeper 💣</h1>
+        <p>Dear Nutan 💖, time for you to test your skills 🎮✨. Find all the tasty tasty chocolates 🍫🍫 that
+            I have hidden for you in this game 🕵️‍♀️🔍. But be careful of the filthy broccoli 🥦😖⚠️</p>
+
+
+        <div class="status-bar">
+            <span>Chocolates Left: <span id="choco-count">0</span></span>
+        </div>
+
+        <div id="grid" class="chocolate-grid"></div>
+
+        <button id="restart-btn" class="btn" onclick="initGame()" style="display: none;">
+            Play Again 🔄
+        </button>
+    </div>
+
+    <div id="win-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+
+            <h2>Congrats Pro Gamer! 🎮🍫</h2>
+
+            <div class="ticket">
+                <div class="ticket-content">
+                    <p style="font-size: 1.2rem; line-height: 1.6;">
+                        To the love of my life, <b>Nutan</b>:<br>
+                        You sweep me off my feet just like you swept this grid!<br>
+                        <b>Happy Chocolate Day! ❤️</b><br>
+                        P.S. I promise to bring you chocolates whenever and wherever you need 🍫❤️✨
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti"></canvas>
+    <script src="chocolate.js"></script>
+</body>
+
+</html>
