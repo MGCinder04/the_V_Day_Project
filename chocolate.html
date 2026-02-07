@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chocolate Day 🍫</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chocolate.css">
+</head>
+
+<body class="choco-bg">
+
+    <a href="index.html" class="back-arrow">←</a>
+
+    <div class="game-container">
+        <h1 class="shine-text" style="font-size: 2.5rem;">Chocolate Hunt 🍫</h1>
+        <p>Find all the chocolates! But watch out for the broccoli... 🥦</p>
+
+        <div class="status-bar">
+            <span>Chocolates Left: <span id="choco-count">0</span></span>
+        </div>
+
+        <div id="grid" class="chocolate-grid"></div>
+
+        <button id="restart-btn" class="btn" onclick="initGame()" style="display: none; margin-top: 20px;">
+            Play Again 🔄
+        </button>
+    </div>
+
+    <div id="win-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Sweet Victory! 🎉</h2>
+            <p>You found all the chocolates!</p>
+            <div class="ticket">
+                <div class="ticket-content">
+                    <h3>🎟️ GOLDEN TICKET 🎟️</h3>
+                    <p>Valid for: <b>Unlimited Chocolates</b></p>
+                    <p>From: <b>Me</b></p>
+                </div>
+            </div>
+            <button class="btn" onclick="closeModal()">Claim Prize 🎁</button>
+        </div>
+    </div>
+
+    <canvas id="confetti"></canvas>
+
+    <script src="chocolate.js"></script>
+</body>
+
+</html>
