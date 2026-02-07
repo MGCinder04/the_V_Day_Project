@@ -117,10 +117,22 @@ h1 {
     transform: none;
 }
 
+/* MINE (Broccoli) - Fixed Centering & Size */
 .cell.mine {
     background-color: #ef9a9a;
     border: 2px solid #e57373;
+    /* Overrides the 3D bevel borders */
+
+    /* Force size and centering to remain */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Make it big again */
+    font-size: 2.5rem;
+
     animation: shake 0.4s;
+    cursor: default;
 }
 
 @keyframes shake {
@@ -223,12 +235,13 @@ h1 {
 
 /* The base square (Unopened Chocolate) */
 .cell {
-    /* Existing style... */
+    /* Existing styling from before... */
     color: transparent;
-    /* Hide numbers/data until clicked */
+    /* Hide contents initially */
+    text-shadow: none;
 }
 
-/* Revealed Safe Square */
+/* 1. REVEALED NUMBER (Clue) */
 .cell.checked {
     background-color: #d7ccc8;
     /* Creamy inside */
@@ -244,15 +257,51 @@ h1 {
     font-size: 2rem;
 }
 
-/* Empty square (0 neighbors) */
-.cell.checked:empty {
+/* 2. REVEALED CHOCOLATE (Safe Empty Spot) */
+.cell.chocolate {
     background-color: #efebe9;
-    /* Lighter cream for empty areas */
+    /* Lighter cream */
+    color: initial !important;
+    /* Show the Emoji color */
+    font-size: 2.5rem;
+    display: flex;
+    /* Ensure centering */
+    justify-content: center;
+    align-items: center;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 3. REVEALED MINE (Broccoli) */
+.cell.mine {
+    background-color: #ef9a9a;
+    /* Red background */
+    border: 2px solid #e57373;
+
+    /* IMPORTANT: Fix Visibility */
+    color: initial !important;
+    /* Force emoji to show */
+    opacity: 1;
+
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: shake 0.4s;
+    cursor: default;
 }
 
 /* Flagged Square */
 .cell.flag {
-    font-size: 2rem;
-    color: white !important;
-    /* Show the flag icon */
+    color: initial !important;
+    /* Show flag */
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
